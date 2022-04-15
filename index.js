@@ -1,10 +1,9 @@
 const goodEffectsList = ['reduces', 'helps with', 'good for', 'protects from', 'helps fight', 'hydrates', 'helps reduce'];
 const badEffectsList = ['can worsen', 'may cause', 'may feed'];
 const isAList = ['is a', 'is an'];
-const { getHTML } = require('./functions');
+const { getHTML, saveToLog } = require('./functions');
 const xl = require('excel4node');
 const cliProgress = require('cli-progress');
-const fs = require('fs');
 
 const parse = async () => {
     const multibar = new cliProgress.MultiBar({
@@ -114,8 +113,7 @@ const parse = async () => {
                             type: 3,
                             error
                         })
-                        let data = JSON.stringify(log);
-                        fs.writeFileSync('log.json', data);
+                        saveToLog(log);
                     }
                     b2.update(elementIdx + 1);
                 }
@@ -127,8 +125,7 @@ const parse = async () => {
                     type: 2,
                     error
                 })
-                let data = JSON.stringify(log);
-                fs.writeFileSync('log.json', data);
+                saveToLog(log);
             }
         }
     } catch (error) {
@@ -136,8 +133,7 @@ const parse = async () => {
             type: 1,
             error
         })
-        let data = JSON.stringify(log);
-        fs.writeFileSync('log.json', data);
+        saveToLog(log);
     }
     multibar.stop();
 }
